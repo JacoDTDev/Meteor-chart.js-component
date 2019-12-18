@@ -1,13 +1,28 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import ReactDOM from 'react-dom';
+//mongo.Collection
+import {CustomerOne} from "../imports/api/customerOne";
+//React components
+import LineChart from "../imports/ui/LineChart";
+
+const renderList = function(cust){
+    return cust.map((valuemap)=>{
+        return valuemap.value
+    })
+};
 
 Meteor.startup(() => {
   // code to run on server at startup
-  let jsx = (
-      <div>
-        <h1>Chartjs Component</h1>
-      </div>
-  );
-  ReactDOM.render(jsx,document.getElementById('app'));
+  Tracker.autorun(function(){
+      const custOne = CustomerOne.find().fetch();
+
+      let jsx = (
+          <div>
+              <h1>Chartjs Component</h1>
+              <LineChart list={renderList(custOne)}/>
+          </div>
+      );
+      ReactDOM.render(jsx,document.getElementById('app'));
+  });
 });
