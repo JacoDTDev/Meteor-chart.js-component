@@ -15,12 +15,11 @@ const renderList = function(cust){
 Meteor.startup(() => {
   // code to run on server at startup
   Tracker.autorun(function(){
-      const custOne = CustomerOne.find().fetch();
 
       let jsx = (
           <div>
               <h1>Chartjs Component</h1>
-              <LineChart list={renderList(custOne)}/>
+              <LineChart />
           </div>
       );
       ReactDOM.render(jsx,document.getElementById('app'));

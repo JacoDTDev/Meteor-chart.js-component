@@ -1,27 +1,29 @@
 import {Meteor} from "meteor/meteor";
 import React from 'react';
+import {CustomerOne} from "../api/customerOne";
 
 export default class LineChart extends React.Component{
 
     constructor(props) {
         super(props);
         this.state = {
-            data:[4,5,6]
+            data:[]
         };
 
     }
     componentDidMount() {
-        const one = this.props.list;
-        this.setState({data:one})
+    this.tracker= Tracker.autorun(()=>{
+        const one = CustomerOne.find().fetch();
+        const three = one.map((x)=>{return x.value});
+        this.setState({data:three})
+    })
     }
-
     render() {
-        const one = this.props.list;
 
+        const two = this.state.data;
         return(
             <div>
-                {one}
-                {this.state.data}
+                {two}
             </div>
         );
     }
